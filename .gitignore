@@ -73,3 +73,12 @@ Plugins/**/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# Use perforce
+Config/*
+Content/*
+.p4ignore
+.vsconfig
+p4_init.bat
+Plugins/*
+
