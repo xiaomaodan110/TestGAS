@@ -81,4 +81,4 @@ Content/*
 .vsconfig
 p4_init.bat
 Plugins/*
-
+*.uproject
