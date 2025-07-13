@@ -6,13 +6,13 @@
 #include "GameFramework/GameModeBase.h"
 #include "TestGASGameMode.generated.h"
 
-UCLASS(minimalapi)
+UCLASS()
 class ATestGASGameMode : public AGameModeBase
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-	ATestGASGameMode();
+    ATestGASGameMode();
 };
 
 
