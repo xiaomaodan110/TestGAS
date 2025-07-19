@@ -15,21 +15,19 @@ class UTestGASAbilitySystemComponent;
 
 
 UCLASS(config = Game)
-class TESTGAS_API ATestGASCharacterBase : public ACharacter, public IAbilitySystemInterface, public IGameplayCueInterface,  public IGameplayTagAssetInterface
+class TESTGAS_API ATestGASCharacterBase : public ACharacter, public IAbilitySystemInterface, public IGameplayCueInterface, public IGameplayTagAssetInterface
 {
 	GENERATED_BODY()
 
-
 public:
-	UPROPERTY(BlueprintCallable, Category = "TestGAS|Character")
-	ATestGASPlayerState* GetTestGASPlayerState() const;
-
-	UPROPERTY(BlueprintCallable, Category = "TestGAS|Character")
+	UFUNCTION(BlueprintCallable, Category = "TestGAS|Character")
 	ATestGASPlayerController* GetTestGASPlayerController() const;
 
-	UPROPERTY(BlueprintCallable, Category = "TestGAS|Character")
-	FORCEINLINE UTestGASAbilitySystemComponent* GetTestGASAbilitySystemComponent() const { return AbilitySystemComponent; };
+	UFUNCTION(BlueprintCallable, Category = "TestGAS|Character")
+	ATestGASPlayerState* GetTestGASPlayerState() const;
 
+	UFUNCTION(BlueprintCallable, Category = "TestGAS|Character")
+	FORCEINLINE UTestGASAbilitySystemComponent* GetTestGASAbilitySystemComponent() const { return AbilitySystemComponent; };
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 

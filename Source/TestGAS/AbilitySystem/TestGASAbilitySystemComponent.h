@@ -9,7 +9,7 @@
 UCLASS()
 class TESTGAS_API UTestGASAbilitySystemComponent : public UAbilitySystemComponent {
 
-	GENERATED_BODY();
+	GENERATED_BODY()
 
 public:
 
