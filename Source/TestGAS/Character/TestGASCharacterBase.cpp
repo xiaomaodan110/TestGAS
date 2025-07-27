@@ -40,3 +40,17 @@ bool ATestGASCharacterBase::HasAnyMatchingGameplayTags(const FGameplayTagContain
 {
 	return false;
 }
+
+void ATestGASCharacterBase::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (AbilitySystemComponent && GetLocalRole() == ENetRole::ROLE_Authority) {
+		AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	}
+}
+
+void ATestGASCharacterBase::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+}

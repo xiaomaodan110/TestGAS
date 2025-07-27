@@ -40,4 +40,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TestGAS|GAS", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UTestGASAbilitySystemComponent> AbilitySystemComponent;
+
+	virtual void BeginPlay() override;
+
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 };
