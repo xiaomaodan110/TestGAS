@@ -10,12 +10,14 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "TestGASGameplayTag.h"
+#include "TestGASAbilitySystemComponent.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
+
 //////////////////////////////////////////////////////////////////////////
 // ATestGASCharacter
-
 ATestGASCharacter::ATestGASCharacter()
 {
 	// Set size for collision capsule
@@ -77,8 +79,8 @@ void ATestGASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
 		
 		// Jumping
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ATestGASCharacter::ActiveJump);
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ATestGASCharacter::UnActiveJump);
 
 		// Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ATestGASCharacter::Move);
@@ -126,4 +128,18 @@ void ATestGASCharacter::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void ATestGASCharacter::ActiveJump()
+{
+	FGameplayTag InputTag = TestGASGameplayTags::FindTagByString(TEXT("InputTag.Jump"), true);
+
+	GetTestGASAbilitySystemComponent()->AbilityInputTagPressed(InputTag);
+}
+
+void ATestGASCharacter::UnActiveJump()
+{
+	FGameplayTag InputTag = TestGASGameplayTags::FindTagByString(TEXT("InputTag.Jump"), true);
+
+	GetTestGASAbilitySystemComponent()->AbilityInputTagReleased(InputTag);
 }

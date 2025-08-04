@@ -13,5 +13,8 @@ class TESTGAS_API UTestGASAssetManager : public UAssetManager
 public:
 
 	UTestGASAssetManager();
+
+protected:
+	virtual void StartInitialLoading() override;
 };
 

@@ -6,18 +6,22 @@
 #include "AbilitySystemInterface.h"
 #include "GameplayCueInterface.h"
 #include "GameplayTagAssetInterface.h"
+#include "GameplayAbilitySpecHandle.h"
 
 #include "TestGASCharacterBase.generated.h"
 
 class ATestGASPlayerState;
 class ATestGASPlayerController;
 class UTestGASAbilitySystemComponent;
-
+class UTestGASGameplayAbility;
 
 UCLASS(config = Game)
 class TESTGAS_API ATestGASCharacterBase : public ACharacter, public IAbilitySystemInterface, public IGameplayCueInterface, public IGameplayTagAssetInterface
 {
 	GENERATED_BODY()
+
+public:
+	ATestGASCharacterBase(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "TestGAS|Character")
@@ -38,10 +42,18 @@ public:
 
 protected:
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TestGAS|GAS", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UTestGASAbilitySystemComponent> AbilitySystemComponent;
-
 	virtual void BeginPlay() override;
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+
+protected:
+	UPROPERTY(BlueprintReadWrite,EditDefaultsOnly, Category = "TestGAS|Ability", meta = (AllowPrivateAccess = "true"))
+	TMap<FGameplayTag, TSubclassOf<UTestGASGameplayAbility>> AbilitiesToAdd;
+
+	TMap<FGameplayTag, FGameplayAbilitySpecHandle> AbilitiesToActive;
+
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TestGAS|GAS", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UTestGASAbilitySystemComponent> AbilitySystemComponent;
 };

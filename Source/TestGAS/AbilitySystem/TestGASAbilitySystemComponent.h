@@ -14,4 +14,23 @@ class TESTGAS_API UTestGASAbilitySystemComponent : public UAbilitySystemComponen
 public:
 
 	UTestGASAbilitySystemComponent(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+	void AbilityInputTagPressed(const FGameplayTag& InputTag);
+	void AbilityInputTagReleased(const FGameplayTag& InputTag);
+
+	void ProcessAbilityInput(float DeltaTime, bool bGamePaused);
+	void ClearAbilityInput();
+
+
+protected:
+	virtual void AbilitySpecInputPressed(FGameplayAbilitySpec& Spec) override;
+	virtual void AbilitySpecInputReleased(FGameplayAbilitySpec& Spec) override;
+
+
+protected:
+	TArray<FGameplayAbilitySpecHandle> InputPressedSpecHandles;
+
+	TArray<FGameplayAbilitySpecHandle> InputReleasedSpecHandles;
+
+	TArray<FGameplayAbilitySpecHandle> InputHeldSpecHandles;
 };
