@@ -89,15 +89,34 @@ void UTestGASAbilitySystemComponent::AbilitySpecInputPressed(FGameplayAbilitySpe
 {
     Super::AbilitySpecInputPressed(Spec);
 
-    if (Spec.IsActive()) {
-        InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputPressed, Spec.Handle, Spec.ActivationInfo.GetActivationPredictionKey());
-    }
+	if (Spec.IsActive())
+	{
+
+// >>> Note:: UE5.4 no need this, but UE 5.5 mush has follow 4 lines. MTF!
+PRAGMA_DISABLE_DEPRECATION_WARNINGS
+	    const UGameplayAbility* Instance = Spec.GetPrimaryInstance();
+        FPredictionKey OriginalPredictionKey = Instance ? Instance->GetCurrentActivationInfo().GetActivationPredictionKey() : Spec.ActivationInfo.GetActivationPredictionKey();
+PRAGMA_ENABLE_DEPRECATION_WARNINGS
+// Note End<<<
+
+		// Invoke the InputPressed event. This is not replicated here. If someone is listening, they may replicate the InputPressed event to the server.
+		InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputPressed, Spec.Handle, OriginalPredictionKey);
+	}
 }
 
 void UTestGASAbilitySystemComponent::AbilitySpecInputReleased(FGameplayAbilitySpec& Spec)
 {
     Super::AbilitySpecInputReleased(Spec);
 	if (Spec.IsActive()) {
-		InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputPressed, Spec.Handle, Spec.ActivationInfo.GetActivationPredictionKey());
+
+        // >>> Note:: UE5.4 no need this, but UE 5.5 mush has follow 4 lines. MTF!
+PRAGMA_DISABLE_DEPRECATION_WARNINGS
+		const UGameplayAbility* Instance = Spec.GetPrimaryInstance();
+		FPredictionKey OriginalPredictionKey = Instance ? Instance->GetCurrentActivationInfo().GetActivationPredictionKey() : Spec.ActivationInfo.GetActivationPredictionKey();
+PRAGMA_ENABLE_DEPRECATION_WARNINGS
+        // Note End<<<
+
+		// Invoke the InputReleased event. This is not replicated here. If someone is listening, they may replicate the InputReleased event to the server.
+        InvokeReplicatedEvent(EAbilityGenericReplicatedEvent::InputReleased, Spec.Handle, OriginalPredictionKey);
 	}
 }
