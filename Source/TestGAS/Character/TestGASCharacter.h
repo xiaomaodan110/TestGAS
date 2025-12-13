@@ -46,6 +46,10 @@ class  ATestGASCharacter : public ATestGASCharacterBase
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
 
+	/** Melee Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* MeleeAction;
+
 public:
 	ATestGASCharacter();
 	
@@ -62,7 +66,10 @@ protected:
 
 	void UnActiveJump();
 			
+	void ActiveMelee();
 
+public:
+	void ComboMelee();
 protected:
 
 	virtual void NotifyControllerChanged() override;

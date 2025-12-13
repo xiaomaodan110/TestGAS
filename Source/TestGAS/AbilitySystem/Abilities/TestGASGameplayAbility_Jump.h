@@ -1,3 +1,5 @@
+
+#pragma once
 #include "TestGASGameplayAbility.h"
 
 #include "TestGASGameplayAbility_Jump.generated.h"

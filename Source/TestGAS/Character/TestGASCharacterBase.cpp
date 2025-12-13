@@ -5,6 +5,8 @@
 #include "TestGASAbilitySystemComponent.h"
 #include "TestGASGameplayAbility.h"
 
+#include "TestGASComboComponent.h"
+
 ATestGASPlayerState* ATestGASCharacterBase::GetTestGASPlayerState() const
 {
 	return CastChecked<ATestGASPlayerState>(GetPlayerState(), ECastCheckedType::NullAllowed);
@@ -18,6 +20,10 @@ ATestGASCharacterBase::ATestGASCharacterBase(const FObjectInitializer& ObjectIni
 	AbilitySystemComponent = ObjectInitializer.CreateDefaultSubobject<UTestGASAbilitySystemComponent>(this, TEXT("AbilitySystemComponent"));
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
+
+
+	ComboComponent = CreateDefaultSubobject<UTestGASComboComponent>(TEXT("ComboComponent"));
+	ComboComponent->SetIsReplicated(false);
 
 	NetUpdateFrequency = 100.0f;
 }

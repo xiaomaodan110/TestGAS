@@ -14,6 +14,7 @@ class ATestGASPlayerState;
 class ATestGASPlayerController;
 class UTestGASAbilitySystemComponent;
 class UTestGASGameplayAbility;
+class UTestGASComboComponent;
 
 UCLASS(config = Game)
 class TESTGAS_API ATestGASCharacterBase : public ACharacter, public IAbilitySystemInterface, public IGameplayCueInterface, public IGameplayTagAssetInterface
@@ -32,6 +33,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "TestGAS|Character")
 	FORCEINLINE UTestGASAbilitySystemComponent* GetTestGASAbilitySystemComponent() const { return AbilitySystemComponent; };
+
+	UFUNCTION(BlueprintCallable, Category = "TestGAS|Character")
+	FORCEINLINE UTestGASComboComponent* GetTestGASComboComponent() const { return ComboComponent; };
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
@@ -54,6 +58,9 @@ protected:
 	TMap<FGameplayTag, FGameplayAbilitySpecHandle> AbilitiesToActive;
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TestGAS|GAS", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TestGAS|Character", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UTestGASAbilitySystemComponent> AbilitySystemComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TestGAS|Character", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UTestGASComboComponent> ComboComponent;
 };

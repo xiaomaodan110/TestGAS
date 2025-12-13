@@ -12,6 +12,7 @@
 #include "InputActionValue.h"
 #include "TestGASGameplayTag.h"
 #include "TestGASAbilitySystemComponent.h"
+#include "TestGASComboComponent.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -87,6 +88,9 @@ void ATestGASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ATestGASCharacter::Look);
+
+		// Meleeing
+		EnhancedInputComponent->BindAction(MeleeAction, ETriggerEvent::Started, this, &ATestGASCharacter::ActiveMelee);
 	}
 	else
 	{
@@ -142,4 +146,22 @@ void ATestGASCharacter::UnActiveJump()
 	FGameplayTag InputTag = TestGASGameplayTags::FindTagByString(TEXT("InputTag.Jump"), true);
 
 	GetTestGASAbilitySystemComponent()->AbilityInputTagReleased(InputTag);
+}
+
+void ATestGASCharacter::ActiveMelee()
+{
+	GetTestGASComboComponent()->SetPressed();
+
+	FGameplayTag InputTag = TestGASGameplayTags::FindTagByString(TEXT("InputTag.Melee"), true);
+
+	GetTestGASAbilitySystemComponent()->AbilityInputTagPressed(InputTag);
+}
+
+void ATestGASCharacter::ComboMelee()
+{
+	if (GetLocalRole() == ENetRole::ROLE_AutonomousProxy) {
+		GetAbilitySystemComponent()->StopMontageIfCurrent(*GetTestGASComboComponent()->GetLastComboAnimMontage());
+
+		ActiveMelee();
+	}
 }
