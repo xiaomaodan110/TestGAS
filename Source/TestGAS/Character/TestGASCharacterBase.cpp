@@ -4,6 +4,7 @@
 #include "TestGASPlayerState.h"
 #include "TestGASAbilitySystemComponent.h"
 #include "TestGASGameplayAbility.h"
+#include "TestGASCharacterAttributeSet.h"
 
 #include "TestGASComboComponent.h"
 
@@ -21,6 +22,7 @@ ATestGASCharacterBase::ATestGASCharacterBase(const FObjectInitializer& ObjectIni
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 
+	CharacterSet = CreateDefaultSubobject<UTestGASCharacterAttributeSet>(TEXT("CharacterSet"));
 
 	ComboComponent = CreateDefaultSubobject<UTestGASComboComponent>(TEXT("ComboComponent"));
 	ComboComponent->SetIsReplicated(false);

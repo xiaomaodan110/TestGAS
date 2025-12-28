@@ -61,6 +61,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TestGAS|Character", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UTestGASAbilitySystemComponent> AbilitySystemComponent;
 
+	UPROPERTY()
+	TObjectPtr<const class UTestGASCharacterAttributeSet> CharacterSet;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TestGAS|Character", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UTestGASComboComponent> ComboComponent;
 };
