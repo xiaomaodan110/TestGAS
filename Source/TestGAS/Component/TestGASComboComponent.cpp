@@ -1,7 +1,7 @@
 #include "TestGASComboComponent.h"
 
 
-UTestGASComboComponent::UTestGASComboComponent():Super()
+UTestGASComboComponent::UTestGASComboComponent(const FObjectInitializer& object_initializer):Super(object_initializer)
 {
 	// close tick.
 	PrimaryComponentTick.bCanEverTick = false;

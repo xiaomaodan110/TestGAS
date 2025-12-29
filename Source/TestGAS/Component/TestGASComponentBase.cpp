@@ -1,7 +1,7 @@
 #include "TestGASComponentBase.h"
 
 
-UTestGASComponentBase::UTestGASComponentBase():Super()
+UTestGASComponentBase::UTestGASComponentBase(const FObjectInitializer& ObjectInitializer):Super(ObjectInitializer)
 {
 	// close tick.
 	PrimaryComponentTick.bCanEverTick = false;

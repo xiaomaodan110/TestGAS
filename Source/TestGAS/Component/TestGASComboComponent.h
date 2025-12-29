@@ -12,7 +12,7 @@ class TESTGAS_API UTestGASComboComponent : public UTestGASComponentBase
 	GENERATED_BODY()
 
 public:
-	UTestGASComboComponent();
+	UTestGASComboComponent(const FObjectInitializer& object_initializer);
 
 	UFUNCTION(BlueprintCallable, Category = "TestGAS|Fight|Combo")
 	int32 GetComboIndex();
@@ -27,7 +27,7 @@ public:
 	void UpdateComboIndex();
 
 	UFUNCTION(BlueprintCallable, Category = "TestGAS|Fight|Combo")
-	void ResetComboIndex();
+	void ResetComboIndex(); 
 
 	UFUNCTION(BlueprintCallable, Category = "TestGAS|Fight|Combo")
 	void SetPressed();

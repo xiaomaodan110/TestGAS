@@ -1,5 +1,8 @@
 #include "TestGASCharacterBase.h"
 
+#include "GameFrameWork/CharacterMovementComponent.h"
+#include "Components/CapsuleComponent.h"
+
 #include "TestGASPlayerController.h"
 #include "TestGASPlayerState.h"
 #include "TestGASAbilitySystemComponent.h"
@@ -7,6 +10,7 @@
 #include "TestGASCharacterAttributeSet.h"
 
 #include "TestGASComboComponent.h"
+#include "TestGASHealthComponent.h"
 
 ATestGASPlayerState* ATestGASCharacterBase::GetTestGASPlayerState() const
 {
@@ -26,6 +30,12 @@ ATestGASCharacterBase::ATestGASCharacterBase(const FObjectInitializer& ObjectIni
 
 	ComboComponent = CreateDefaultSubobject<UTestGASComboComponent>(TEXT("ComboComponent"));
 	ComboComponent->SetIsReplicated(false);
+
+	HealthComponent = CreateDefaultSubobject<UTestGASHealthComponent>(TEXT("HealthComponent"));
+	HealthComponent->SetIsReplicated(true);
+	HealthComponent->OnDeathStarted.AddDynamic(this, &ThisClass::OnDeathStarted);
+	HealthComponent->OnDeathFinished.AddDynamic(this, &ThisClass::OnDeathFinished);
+
 
 	NetUpdateFrequency = 100.0f;
 }
@@ -82,9 +92,64 @@ void ATestGASCharacterBase::BeginPlay()
 			AbilitiesToActive.Add(TmpAbilityPair.Key, AbilitySpecHandle);
 		}
 	}
+
+	if (HealthComponent) {
+		HealthComponent->InitializeWithAbilitySystem(AbilitySystemComponent);
+	}
+
 }
 
 void ATestGASCharacterBase::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	Super::EndPlay(EndPlayReason);
+}
+
+void ATestGASCharacterBase::OnDeathStarted(AActor* OwningActor)
+{
+	DisableMovementAndCollision();
+
+}
+
+void ATestGASCharacterBase::OnDeathFinished(AActor* OwningActor)
+{
+	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ThisClass::DestroyDueToDeath);
+}
+
+
+void ATestGASCharacterBase::DisableMovementAndCollision()
+{
+	if (Controller)
+	{
+		Controller->SetIgnoreMoveInput(true);
+	}
+
+	UCapsuleComponent* CapsuleComp = GetCapsuleComponent();
+	check(CapsuleComp);
+	CapsuleComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	CapsuleComp->SetCollisionResponseToAllChannels(ECR_Ignore);
+
+	UCharacterMovementComponent* MoveComp = CastChecked<UCharacterMovementComponent>(GetCharacterMovement());
+	MoveComp->StopMovementImmediately();
+	MoveComp->DisableMovement();
+}
+
+void ATestGASCharacterBase::DestroyDueToDeath()
+{
+	K2_OnDeathFinished();
+
+	UninitAndDestroy();
+}
+
+
+void ATestGASCharacterBase::UninitAndDestroy()
+{
+	if (GetLocalRole() == ROLE_Authority)
+	{
+		DetachFromControllerPendingDestroy();
+		SetLifeSpan(0.1f);
+	}
+
+	HealthComponent->UninitializeFromAbilitySystem();
+
+	SetActorHiddenInGame(true);
 }
