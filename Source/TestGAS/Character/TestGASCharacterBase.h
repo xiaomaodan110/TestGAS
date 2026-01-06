@@ -79,6 +79,12 @@ protected:
 
 	TMap<FGameplayTag, FGameplayAbilitySpecHandle> AbilitiesToActive;
 
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "TestGAS|Ability", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<UTestGASGameplayAbility> DeathAbilityClass;
+
+	FGameplayAbilitySpecHandle DeathAbilityHandle;
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TestGAS|Character", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UTestGASAbilitySystemComponent> AbilitySystemComponent;

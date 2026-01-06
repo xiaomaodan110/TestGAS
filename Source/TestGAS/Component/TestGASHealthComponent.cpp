@@ -252,41 +252,42 @@ void UTestGASHealthComponent::HandleMaxHealthChanged(AActor* DamageInstigator, A
 void UTestGASHealthComponent::HandleOutOfHealth(AActor* DamageInstigator, AActor* DamageCauser, const FGameplayEffectSpec* DamageEffectSpec, float DamageMagnitude, float OldValue, float NewValue)
 {
 #if WITH_SERVER_CODE
-	//if (AbilitySystemComponent && DamageEffectSpec)
-	//{
-	//	// Send the "GameplayEvent.Death" gameplay event through the owner's ability system.  This can be used to trigger a death gameplay ability.
-	//	{
-	//		FGameplayEventData Payload;
-	//		Payload.EventTag = TestGASGameplayTags::GameplayEvent_Death;
-	//		Payload.Instigator = DamageInstigator;
-	//		Payload.Target = AbilitySystemComponent->GetAvatarActor();
-	//		Payload.OptionalObject = DamageEffectSpec->Def;
-	//		Payload.ContextHandle = DamageEffectSpec->GetEffectContext();
-	//		Payload.InstigatorTags = *DamageEffectSpec->CapturedSourceTags.GetAggregatedTags();
-	//		Payload.TargetTags = *DamageEffectSpec->CapturedTargetTags.GetAggregatedTags();
-	//		Payload.EventMagnitude = DamageMagnitude;
+	if (AbilitySystemComponent && DamageEffectSpec)
+	{
+		// Send the "GameplayEvent.Death" gameplay event through the owner's ability system.  This can be used to trigger a death gameplay ability.
+		{
+			FGameplayEventData Payload;
+			Payload.EventTag = TestGASGameplayTags::GameplayEvent_Death;
+			Payload.Instigator = DamageInstigator;
+			Payload.Target = AbilitySystemComponent->GetAvatarActor();
+			Payload.OptionalObject = DamageEffectSpec->Def;
+			Payload.ContextHandle = DamageEffectSpec->GetEffectContext();
+			Payload.InstigatorTags = *DamageEffectSpec->CapturedSourceTags.GetAggregatedTags();
+			Payload.TargetTags = *DamageEffectSpec->CapturedTargetTags.GetAggregatedTags();
+			Payload.EventMagnitude = DamageMagnitude;
 
-	//		FScopedPredictionWindow NewScopedWindow(AbilitySystemComponent, true);
-	//		AbilitySystemComponent->HandleGameplayEvent(Payload.EventTag, &Payload);
-	//	}
+			FScopedPredictionWindow NewScopedWindow(AbilitySystemComponent, true);
+			AbilitySystemComponent->HandleGameplayEvent(Payload.EventTag, &Payload);
+		}
 
-	//	// Send a standardized verb message that other systems can observe
-	//	{
-	//		FTestGASVerbMessage Message;
-	//		Message.Verb = TAG_TestGAS_Elimination_Message;
-	//		Message.Instigator = DamageInstigator;
-	//		Message.InstigatorTags = *DamageEffectSpec->CapturedSourceTags.GetAggregatedTags();
-	//		Message.Target = UTestGASVerbMessageHelpers::GetPlayerStateFromObject(AbilitySystemComponent->GetAvatarActor());
-	//		Message.TargetTags = *DamageEffectSpec->CapturedTargetTags.GetAggregatedTags();
-	//		//@TODO: Fill out context tags, and any non-ability-system source/instigator tags
-	//		//@TODO: Determine if it's an opposing team kill, self-own, team kill, etc...
+		// from lyra.
+		// Send a standardized verb message that other systems can observe
+		{
+			//FTestGASVerbMessage Message;
+			//Message.Verb = TAG_TestGAS_Elimination_Message;
+			//Message.Instigator = DamageInstigator;
+			//Message.InstigatorTags = *DamageEffectSpec->CapturedSourceTags.GetAggregatedTags();
+			//Message.Target = UTestGASVerbMessageHelpers::GetPlayerStateFromObject(AbilitySystemComponent->GetAvatarActor());
+			//Message.TargetTags = *DamageEffectSpec->CapturedTargetTags.GetAggregatedTags();
+			////@TODO: Fill out context tags, and any non-ability-system source/instigator tags
+			////@TODO: Determine if it's an opposing team kill, self-own, team kill, etc...
 
-	//		UGameplayMessageSubsystem& MessageSystem = UGameplayMessageSubsystem::Get(GetWorld());
-	//		MessageSystem.BroadcastMessage(Message.Verb, Message);
-	//	}
+			//UGameplayMessageSubsystem& MessageSystem = UGameplayMessageSubsystem::Get(GetWorld());
+			//MessageSystem.BroadcastMessage(Message.Verb, Message);
+		}
 
-	//	//@TODO: assist messages (could compute from damage dealt elsewhere)?
-	//}
+		//@TODO: assist messages (could compute from damage dealt elsewhere)?
+	}
 
 #endif // #if WITH_SERVER_CODE
 }

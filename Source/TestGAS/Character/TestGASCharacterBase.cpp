@@ -91,16 +91,24 @@ void ATestGASCharacterBase::BeginPlay()
 
 			AbilitiesToActive.Add(TmpAbilityPair.Key, AbilitySpecHandle);
 		}
+
+		UTestGASGameplayAbility* DeathAbilityCDO = DeathAbilityClass->GetDefaultObject<UTestGASGameplayAbility>();
+		FGameplayAbilitySpec DeathAbilityCDOSpec(DeathAbilityCDO, 1);
+		DeathAbilityCDOSpec.SourceObject = this;
+		DeathAbilityHandle = AbilitySystemComponent->GiveAbility(DeathAbilityCDOSpec);
 	}
 
 	if (HealthComponent) {
 		HealthComponent->InitializeWithAbilitySystem(AbilitySystemComponent);
 	}
-
 }
 
 void ATestGASCharacterBase::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	if (AbilitySystemComponent && GetLocalRole() == ENetRole::ROLE_Authority) {
+		AbilitySystemComponent->ClearAllAbilities();
+	}
+
 	Super::EndPlay(EndPlayReason);
 }
 
