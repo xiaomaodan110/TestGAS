@@ -21,6 +21,7 @@ public class TestGAS : ModuleRules
             "TestGAS/Component",
             "TestGAS/DamagedActor",
             "TestGAS/FeedBack",
+            "TestGAS/FeedBack/NumberPopComponent",
             "TestGAS/GameMode",
             "TestGAS/Item",
             "TestGAS/Notify",

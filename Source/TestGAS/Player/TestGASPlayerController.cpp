@@ -3,10 +3,13 @@
 #include "TestGASPlayerState.h"
 #include "TestGASAbilitySystemComponent.h"
 #include "TestGASHUD.h"
+#include "TestGASNumberPopComponent_UMG.h"
+
 
 ATestGASPlayerController::ATestGASPlayerController(const FObjectInitializer& ObjectInitializer /*= FObjectInitializer:Get()*/):Super(ObjectInitializer)
 {
-
+	NumberPopComponent = CreateDefaultSubobject<UTestGASNumberPopComponent_UMG>(TEXT("NumberPopComponent"));
+	NumberPopComponent->SetIsReplicated(false);
 }
 
 
@@ -24,6 +27,11 @@ UTestGASAbilitySystemComponent* ATestGASPlayerController::GetTestGASAbilitySyste
 	}
 
 	return nullptr;
+}
+
+UTestGASNumberPopComponent* ATestGASPlayerController::GetTestGASNumberPopComponent() const
+{
+	return NumberPopComponent;
 }
 
 ATestGASHUD* ATestGASPlayerController::GetTestGASHUD() const
