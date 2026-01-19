@@ -50,6 +50,21 @@ class  ATestGASCharacter : public ATestGASCharacterBase
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* MeleeAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* AirAttackAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* KeyAction_1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* KeyAction_2;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* KeyAction_3;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* KeyAction_4;
+
 public:
 	ATestGASCharacter();
 	
@@ -67,6 +82,16 @@ protected:
 	void UnActiveJump();
 			
 	void ActiveMelee();
+
+	void AirAttack();
+
+	void Key_1();
+
+	void Key_2();
+
+	void Key_3();
+
+	void Key_4();
 
 public:
 	void ComboMelee();

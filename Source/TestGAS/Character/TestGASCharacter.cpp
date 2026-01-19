@@ -91,6 +91,13 @@ void ATestGASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 		// Meleeing
 		EnhancedInputComponent->BindAction(MeleeAction, ETriggerEvent::Started, this, &ATestGASCharacter::ActiveMelee);
+
+		EnhancedInputComponent->BindAction(AirAttackAction, ETriggerEvent::Started, this, &ATestGASCharacter::AirAttack);
+		EnhancedInputComponent->BindAction(KeyAction_1, ETriggerEvent::Started, this, &ATestGASCharacter::Key_1);
+		EnhancedInputComponent->BindAction(KeyAction_2, ETriggerEvent::Started, this, &ATestGASCharacter::Key_2);
+		EnhancedInputComponent->BindAction(KeyAction_3, ETriggerEvent::Started, this, &ATestGASCharacter::Key_3);
+		EnhancedInputComponent->BindAction(KeyAction_4, ETriggerEvent::Started, this, &ATestGASCharacter::Key_4);
+
 	}
 	else
 	{
@@ -153,6 +160,41 @@ void ATestGASCharacter::ActiveMelee()
 	GetTestGASComboComponent()->SetPressed();
 
 	FGameplayTag InputTag = TestGASGameplayTags::FindTagByString(TEXT("InputTag.Melee"), true);
+
+	GetTestGASAbilitySystemComponent()->AbilityInputTagPressed(InputTag);
+}
+
+void ATestGASCharacter::AirAttack()
+{
+	FGameplayTag InputTag = TestGASGameplayTags::FindTagByString(TEXT("InputTag.AirAttack"), true);
+
+	GetTestGASAbilitySystemComponent()->AbilityInputTagPressed(InputTag);
+}
+
+void ATestGASCharacter::Key_1()
+{
+	FGameplayTag InputTag = TestGASGameplayTags::FindTagByString(TEXT("InputTag.Key.1"), true);
+
+	GetTestGASAbilitySystemComponent()->AbilityInputTagPressed(InputTag);
+}
+
+void ATestGASCharacter::Key_2()
+{
+	FGameplayTag InputTag = TestGASGameplayTags::FindTagByString(TEXT("InputTag.Key.2"), true);
+
+	GetTestGASAbilitySystemComponent()->AbilityInputTagPressed(InputTag);
+}
+
+void ATestGASCharacter::Key_3()
+{
+	FGameplayTag InputTag = TestGASGameplayTags::FindTagByString(TEXT("InputTag.Key.3"), true);
+
+	GetTestGASAbilitySystemComponent()->AbilityInputTagPressed(InputTag);
+}
+
+void ATestGASCharacter::Key_4()
+{
+	FGameplayTag InputTag = TestGASGameplayTags::FindTagByString(TEXT("InputTag.Key.4"), true);
 
 	GetTestGASAbilitySystemComponent()->AbilityInputTagPressed(InputTag);
 }
