@@ -10,7 +10,7 @@
 class ATestGASCharacterBase;
 
 UCLASS(BlueprintType, Blueprintable)
-class TestGAS_API ATestGASHitBox : public AActor
+class TESTGAS_API ATestGASHitBox : public AActor
 {
 	GENERATED_BODY()
 

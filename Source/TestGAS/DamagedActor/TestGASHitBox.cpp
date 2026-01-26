@@ -23,6 +23,31 @@ ATestGASHitBox::ATestGASHitBox(const FObjectInitializer& ObjectInitializer)
 
 void ATestGASHitBox::HandleDamage(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if (GetInstigator() != OtherActor) {
+		if (ATestGASCharacterBase* InPawn = Cast<ATestGASCharacterBase>(GetInstigator())) {
+
+			if (ATestGASCharacterBase* InTarget = Cast<ATestGASCharacterBase>(OtherActor)) {
+
+				if (!InPawn->IsNetMode(ENetMode::NM_Client)) {
+					FGameplayEventData EventData;
+					EventData.Instigator = GetInstigator();
+					EventData.Target = InTarget;
+
+					if (IsExist(InTarget)) {
+						return;
+					}
+
+					if (!BuffsTags.IsEmpty()) {
+						for (auto& Tmp : BuffsTags) {
+							UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetInstigator(), Tmp.Last(), EventData);
+						}
+					}
+				
+					AttackedTarget.AddUnique(InTarget);
+				}
+			}
+		}
+	}
 }
 
 UPrimitiveComponent* ATestGASHitBox::GetHitDamage()
@@ -58,8 +83,14 @@ bool ATestGASHitBox::IsExist(ATestGASCharacterBase* InNewTarget) const
 
 void ATestGASHitBox::BeginPlay()
 {
+	Super::BeginPlay();
+	if (UPrimitiveComponent* InHitComponent = GetHitDamage()) {
+		InHitComponent->SetHiddenInGame(true);
+		InHitComponent->OnComponentBeginOverlap.AddDynamic(this, &ATestGASHitBox::HandleDamage);
+	}
 }
 
 void ATestGASHitBox::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
 }
