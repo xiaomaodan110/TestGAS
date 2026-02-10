@@ -27,9 +27,12 @@ void UTestGASDamageExecution_Air::Execute_Implementation(const FGameplayEffectCu
 
 	AActor* EffectCauser = EffectContextHandle.GetEffectCauser();
 
-	UAbilitySystemComponent* EffectASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(EffectCauser);
+	//UAbilitySystemComponent* EffectASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(EffectCauser);
+	UAbilitySystemComponent* EffectASC = ExecutionParams.GetTargetAbilitySystemComponent();
 
-	UAbilitySystemComponent* OriginalASC = EffectContextHandle.GetOriginalInstigatorAbilitySystemComponent();
+	//UAbilitySystemComponent* OriginalASC = EffectContextHandle.GetOriginalInstigatorAbilitySystemComponent();
+	UAbilitySystemComponent* OriginalASC = ExecutionParams.GetSourceAbilitySystemComponent();
+
 
 	float Defense = 0.f;
 

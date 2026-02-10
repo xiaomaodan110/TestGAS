@@ -35,9 +35,20 @@ UWidgetAnimation* UUI_Base::GetNameWidgetAnimation(const FString& InWidgetName)
 
 ATestGASCharacterBase* UUI_Base::UI_GetTestGASCharacterBase() const
 {
-	if (GetWorld()) {
-		if (APlayerController* InPlayerController = GetWorld()->GetFirstPlayerController<APlayerController>()) {
-			if (ATestGASCharacterBase* InCharacter = InPlayerController->GetPawn<ATestGASCharacterBase>()) {
+	if (APlayerController* OwningPC = GetOwningPlayer())
+	{
+		if (ATestGASCharacterBase* InCharacter = OwningPC->GetPawn<ATestGASCharacterBase>())
+		{
+			return InCharacter;
+		}
+	}
+
+	if (UWorld* World = GetWorld())
+	{
+		if (APlayerController* InPlayerController = World->GetFirstPlayerController<APlayerController>())
+		{
+			if (ATestGASCharacterBase* InCharacter = InPlayerController->GetPawn<ATestGASCharacterBase>())
+			{
 				return InCharacter;
 			}
 		}

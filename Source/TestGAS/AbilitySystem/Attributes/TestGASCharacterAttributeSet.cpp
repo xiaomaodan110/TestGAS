@@ -12,6 +12,7 @@ UTestGASCharacterAttributeSet::UTestGASCharacterAttributeSet():Health(100.0f), M
 	bOutOfHealth = false;
 	HealthBeforeAttributeChange = 0.f;
 	MaxHealthBeforeAttributeChange = 0.f;
+	ManaBeforeAttributeChange = 0.f;
 	MaxManaBeforeAttributeChange = 0.f;
 }
 
@@ -70,6 +71,8 @@ void UTestGASCharacterAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData
 
 void UTestGASCharacterAttributeSet::OnRep_Mana(const FGameplayAttributeData& OldValue)
 {
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UTestGASCharacterAttributeSet, Mana, OldValue);
+
 	const float CurrentMana = GetMana();
 	const float EstimatedMagnitude = CurrentMana - OldValue.GetCurrentValue();
 
@@ -121,6 +124,7 @@ bool UTestGASCharacterAttributeSet::PreGameplayEffectExecute(FGameplayEffectModC
 
 	HealthBeforeAttributeChange = GetHealth();
 	MaxHealthBeforeAttributeChange = GetMaxHealth();
+	ManaBeforeAttributeChange = GetMana();
 	MaxManaBeforeAttributeChange = GetMaxMana();
 	return true;
 }
@@ -147,6 +151,7 @@ void UTestGASCharacterAttributeSet::PostGameplayEffectExecute(const FGameplayEff
 	}
 	else if (Data.EvaluatedData.Attribute == GetManaAttribute()) {
 		SetMana(FMath::Clamp(GetMana(), 0.0f, GetMaxMana()));
+		UE_LOG(LogTemp, Warning, TEXT("Mana changed on server: %f"), GetMana());
 	}
 	else if (Data.EvaluatedData.Attribute == GetMaxManaAttribute()) {
 		OnMaxManaChanged.Broadcast(Instigator, Causer, &Data.EffectSpec, Data.EvaluatedData.Magnitude, MaxManaBeforeAttributeChange, GetMaxMana());
@@ -154,6 +159,10 @@ void UTestGASCharacterAttributeSet::PostGameplayEffectExecute(const FGameplayEff
 
 	if (GetHealth() != HealthBeforeAttributeChange) {
 		OnHealthChanged.Broadcast(Instigator, Causer, &Data.EffectSpec, Data.EvaluatedData.Magnitude, HealthBeforeAttributeChange, GetHealth());
+	}
+
+	if (GetMana() != ManaBeforeAttributeChange) {
+		OnManaChanged.Broadcast(Instigator, Causer, &Data.EffectSpec, Data.EvaluatedData.Magnitude, ManaBeforeAttributeChange, GetMana());
 	}
 
 	if ((GetHealth() <= 0.0f) && !bOutOfHealth) {

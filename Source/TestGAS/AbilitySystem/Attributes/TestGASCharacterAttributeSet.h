@@ -85,43 +85,44 @@ protected:
 
 private:
 
-	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_Damage, meta = (HideFromModifiers, AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_Damage, meta = (AllowPrivateAccess = "true"))
 	FGameplayAttributeData Damage;
 
-	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_Level, meta = (HideFromModifiers, AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_Level, meta = (AllowPrivateAccess = "true"))
 	FGameplayAttributeData Level;
 
-	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_Health, meta = (HideFromModifiers, AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_Health, meta = (AllowPrivateAccess = "true"))
 	FGameplayAttributeData Health;
 
-	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_MaxHealth, meta = (HideFromModifiers, AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_MaxHealth, meta = (AllowPrivateAccess = "true"))
 	FGameplayAttributeData MaxHealth;
 
 	bool bOutOfHealth;
 	float HealthBeforeAttributeChange;
 	float MaxHealthBeforeAttributeChange;
+	float ManaBeforeAttributeChange;
 	float MaxManaBeforeAttributeChange;
-	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_Mana, meta = (HideFromModifiers, AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_Mana, meta = (AllowPrivateAccess = "true"))
 	FGameplayAttributeData Mana;
 
-	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_MaxMana, meta = (HideFromModifiers, AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_MaxMana, meta = (AllowPrivateAccess = "true"))
 	FGameplayAttributeData MaxMana;
 
-	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_Stamina, meta = (HideFromModifiers, AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_Stamina, meta = (AllowPrivateAccess = "true"))
 	FGameplayAttributeData Stamina;
 
-	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_MaxStamina, meta = (HideFromModifiers, AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_MaxStamina, meta = (AllowPrivateAccess = "true"))
 	FGameplayAttributeData MaxStamina;
 
-	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_Attack, meta = (HideFromModifiers, AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_Attack, meta = (AllowPrivateAccess = "true"))
 	FGameplayAttributeData Attack;
 
-	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_Defense, meta = (HideFromModifiers, AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_Defense, meta = (AllowPrivateAccess = "true"))
 	FGameplayAttributeData Defense;
 
-	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_Exp, meta = (HideFromModifiers, AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_Exp, meta = (AllowPrivateAccess = "true"))
 	FGameplayAttributeData Exp;
 
-	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_MaxExp, meta = (HideFromModifiers, AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadOnly, Category = "TestGAS|Attribute", ReplicatedUsing = OnRep_MaxExp, meta = (AllowPrivateAccess = "true"))
 	FGameplayAttributeData MaxExp;
 };
